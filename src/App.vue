@@ -1,17 +1,54 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <youtube :video-id="videoId" ref="youtube" @playing="playing"></youtube>
+    <div>
+      <button @click="playVideo">play</button>
+      <button @click="pauseVideo">pause</button>
+      <span>{{currentTime}}</span>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Vue from 'vue';
+import VueYoutube from 'vue-youtube';
+
+Vue.use(VueYoutube);
+
+let timer = null;
 
 export default {
   name: 'app',
-  components: {
-    HelloWorld
+  data() {
+    return {
+      videoId: 'J9gKyRmic20',
+      currentTime: 0
+    }
+  },
+  methods: {
+    playVideo() {
+      this.player.playVideo();
+    },
+    pauseVideo() {
+      this.player.pauseVideo();
+    },
+    playing() {
+      if (!timer) {
+        timer = setInterval(function getTime() {
+          this.player.getCurrentTime().then((seconds) => {
+            this.currentTime = this.prettyCurrTime(seconds);
+          });
+        }.bind(this), 100);
+      }
+    },
+    prettyCurrTime(s) {
+      return(s-(s%=60))/60+(9<s?':':':0')+s
+    }
+  },
+  computed: {
+    player() {
+      return this.$refs.youtube.player;
+    }
   }
 }
 </script>
