@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <input type="text" v-model="videoId" placeholder="place youtube video id" />
     <youtube :video-id="videoId" ref="youtube" @playing="playing"></youtube>
     <div>
       <button @click="playVideo">play</button>
