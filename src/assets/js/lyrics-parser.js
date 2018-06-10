@@ -1,4 +1,4 @@
-class Lyrica {
+export default class Lyrica {
   constructor() {
     this.lyrics = [];
   }
@@ -34,7 +34,6 @@ class Lyrica {
   }
 
   nextLine(timestamp, lines) {
-    let nextLine = null;
     let hours = '';
     let minutes = '';
     let seconds = '';
@@ -73,6 +72,4 @@ class Lyrica {
              xSeconds >= seconds;
     })[1];
   }
-};
-
-module.exports = new Lyrica();
+}
